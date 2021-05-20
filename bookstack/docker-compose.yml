@@ -1,0 +1,26 @@
+version: '3'
+services:
+  bookstack:
+    image: solidnerd/bookstack:latest
+    environment:
+      APP_URL: http://localhost:8080
+      DB_CONNECTION: mysql
+      DB_HOST: db:3306
+      DB_DATABASE: bookstack
+      DB_USERNAME: bookstack
+      DB_PASSWORD: password
+    ports:
+    - 8080:8080
+    volumes:
+    - /opt/bookstack/uploads/:/var/www/bookstack/public/uploads
+    - /opt/bookstack/storage/:/var/www/bookstack/public/storage
+  db:
+    image: webhippie/mariadb:latest
+    environment:
+      MARIADB_DATABASE: bookstack
+      MARIADB_USERNAME: bookstack
+      MARIADB_PASSWORD: password
+      MARIADB_ROOT_PASSWORD: password
+    volumes:
+    - /opt/bookstack/mysql/:/var/lib/mysql
+    - /opt/bookstack/backup/:/var/lib/backup
